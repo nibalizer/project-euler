@@ -19,7 +19,10 @@ def nat_num(biggest, factors):
         for factor in factors:
             if num % factor == 0:
                 yield num
-                continue
-            num += 1
+                break
+        num += 1
     
-print nat_num(1000, [3,5])
+#for i in nat_num(1000, [3,5]):
+#    print i,
+
+print sum(nat_num(1000, [3,5]))
