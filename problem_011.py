@@ -36,6 +36,7 @@ What is the greatest product of four adjacent numbers in any direction (up, down
 
 
 """
+import time
 
 
 grid = [ 
@@ -129,6 +130,247 @@ print down((0,0))
 print right((0,0))
 print downright((0,0))
 print bit
+
+class bcolors:
+    HEADER = '\033[95m'
+    BLUE = '\033[94m'
+    GREEN = '\033[92m'
+    WARNING = '\033[93m'
+    RED = '\033[91m'
+    ENDC = '\033[0m'
+
+    def disable(self):
+        self.HEADER = ''
+        self.BLUE = ''
+        self.GREEN = ''
+        self.WARNING = ''
+        self.RED = ''
+        self.ENDC = ''
+
+besty, bestx = best_root
+besters = []
+if bit == "right":
+    besters.append((besty, bestx))
+    besters.append((besty, bestx + 1))
+    besters.append((besty, bestx + 2))
+    besters.append((besty, bestx + 3))
+
+if bit == "downright":
+    besters.append((besty, bestx))
+    besters.append((besty + 1, bestx + 1))
+    besters.append((besty + 2, bestx + 2))
+    besters.append((besty + 3, bestx + 3))
+
+if bit == "down":
+    besters.append((besty, bestx))
+    besters.append((besty + 1, bestx))
+    besters.append((besty + 2, bestx))
+    besters.append((besty + 3, bestx))
+
+if bit == "upright":
+    besters.append((besty, bestx))
+    besters.append((besty - 1, bestx + 1))
+    besters.append((besty - 2, bestx + 2))
+    besters.append((besty - 3, bestx + 3))
+
+
+print
+for y, row in enumerate(grid):
+    for x, item in enumerate(row):
+        if (y, x) in besters:
+            print bcolors.RED + "%2s" %item + bcolors.ENDC,
+        else:
+            print "%2s" %item ,
+    print
+
+print roots[-1]    
+"""
+besters = [(16,16),(17,17),(18,18),(19,19)]
+print
+for y, row in enumerate(grid):
+    for x, item in enumerate(row):
+        if (y, x) in besters:
+            print bcolors.RED + "%2s" %item + bcolors.ENDC,
+        else:
+            print "%2s" %item ,
+    print
+"""
+def testit(root):
+    bestersdr = []
+    bestersr = []
+    bestersd = []
+    bestersur = []
+
+    y, x = root
+    one = grid[y][x]
+    two = grid[y-1][x+1]
+    three = grid[y-2][x+2]
+    four = grid[y-3][x+3]
+    besty, bestx = root
+    bestersur.append((besty, bestx))
+    bestersur.append((besty - 1, bestx + 1))
+    bestersur.append((besty - 2, bestx + 2))
+    bestersur.append((besty - 3, bestx + 3))
+    ur = one * two * three * four
+
+    y, x = root
+    one = grid[y][x]
+    two = grid[y+1][x+1]
+    three = grid[y+2][x+2]
+    four = grid[y+3][x+3]
+    besty, bestx = root
+    bestersdr.append((besty, bestx))
+    bestersdr.append((besty + 1, bestx + 1))
+    bestersdr.append((besty + 2, bestx + 2))
+    bestersdr.append((besty + 3, bestx + 3))
+    dr = one * two * three * four
+        
+
+    y, x = root
+    one = grid[y][x]
+    two = grid[y][x+1]
+    three = grid[y][x+2]
+    four = grid[y][x+3]
+    besty, bestx = root
+    bestersr.append((besty, bestx))
+    bestersr.append((besty, bestx + 1))
+    bestersr.append((besty, bestx + 2))
+    bestersr.append((besty, bestx + 3))
+    r  = one * two * three * four
+
+    y, x = root
+    one = grid[y][x]
+    two = grid[y+1][x]
+    three = grid[y+2][x]
+    four = grid[y+3][x]
+    besty, bestx = root
+    bestersd.append((besty, bestx))
+    bestersd.append((besty + 1, bestx))
+    bestersd.append((besty + 2, bestx))
+    bestersd.append((besty + 3, bestx))
+    d = one * two * three * four
+    print
+    for y, row in enumerate(grid):
+        for x, item in enumerate(row):
+            if (y, x) in bestersr:
+                print bcolors.RED + "%2s" %item + bcolors.ENDC,
+            elif (y, x) in bestersdr:
+                print bcolors.GREEN + "%2s" %item + bcolors.ENDC,
+            elif (y, x) in bestersd:
+                print bcolors.BLUE+ "%2s" %item + bcolors.ENDC,
+            elif (y, x) in bestersur:
+                print bcolors.HEADER+ "%2s" %item + bcolors.ENDC,
+            else:
+                print "%2s" %item ,
+        if y == 0:
+            print "d  " , "%9s" %d
+        elif y == 1:
+            print "r  " , "%8s" %r
+        elif y == 2:
+            print "dr " , "%8s" %dr
+        elif y == 3:
+            print "ur " , "%8s" %ur
+        else:  
+            print
+
+
+
+for root in roots:
+    testit(root)
+    #time.sleep(.25)
+
+newroots = []
+
+for y, row in enumerate(grid):
+    for x, number in enumerate(row):
+        newroots.append((y,x))
+
+
+def downright(root):
+    y, x = root
+    one = grid[y][x]
+    two = grid[y+1][x+1]
+    three = grid[y+2][x+2]
+    four = grid[y+3][x+3]
+    return one * two * three * four
+
+def upright(root):
+    y, x = root
+    one = grid[y][x]
+    two = grid[y-1][x+1]
+    three = grid[y-2][x+2]
+    four = grid[y-3][x+3]
+    return one * two * three * four
+    
+
+def right(root):
+    y, x = root
+    one = grid[y][x]
+    two = grid[y][x+1]
+    three = grid[y][x+2]
+    four = grid[y][x+3]
+    return one * two * three * four
+
+def down(root):
+    y, x = root
+    one = grid[y][x]
+    two = grid[y+1][x]
+    three = grid[y+2][x]
+    four = grid[y+3][x]
+    return one * two * three * four
+
+
+best_root = None
+bit = ""
+greatest = 0
+for root in newroots:
+    try:
+        right_side = right(root)
+    except IndexError:
+        pass
+    try:
+        down_side = down(root)
+    except IndexError:
+        pass
+    try:
+        downright_side = downright(root)
+    except IndexError:
+        pass
+    try:
+        upright_side = upright(root)
+    except IndexError:
+        pass
+    print right_side
+    print down_side
+    print downright_side
+    print upright_side
+    if right_side > greatest:
+        greatest = right_side
+        best_root = root
+        bit = "right"
+    if down_side > greatest:
+        greatest = down_side
+        best_root = root
+        bit = "down"
+    if downright_side > greatest:
+        greatest = downright_side
+        best_root = root
+        bit = "downright"
+    if upright_side > greatest:
+        greatest = upright_side
+        best_root = root
+        bit = "upright"
+
+
+print best_root
+print greatest
+print testit(best_root)
+
+
+
+
+
+
 
 
 
