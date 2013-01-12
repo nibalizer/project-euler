@@ -28,19 +28,22 @@ What is the value of the first triangle number to have over five hundred divisor
 
 """
 
+import math
 
 def triangle(x):
     return sum(xrange(x+1))
 
-def divisors(x):
+def divisors(x,verbose=False):
     divs = set()
     xf = float(x)
-    for i in xrange(1, int(x/2)):
+    for i in xrange(1, int(math.sqrt(x))):
         #debug
         #print x, i, x/i
         if (xf / i) % 1 == 0:
            divs.add(i)
            divs.add(x/i)
+           if verbose:
+                print "%s : %s : %s" % (len(divs), i, x/i)
     return sorted(divs)
 
 
@@ -48,24 +51,57 @@ def divisors(x):
 
 
 #print triangle numbers like in example
-for i in xrange(20):
-    tri = triangle(i)
-    print "{0}: {1}".format(tri, ",".join(map(str,divisors(tri))))
+def pretty():
+    for i in xrange(20):
+        tri = triangle(i)
+        print "{0}: {1}".format(tri, ",".join(map(str,divisors(tri))))
 
 #print divisors(10)
 
-num_divisors = 0
 
-i = 0
-while num_divisors < 500:
-    i += 1
+def pretty_until(x):
+    num_divisors = 0
+    i = 0
+    while num_divisors < 500:
+        i += 1
+        tri = triangle(i)
+        div = divisors(tri)
+        len_div = len(div)
+        print "{0}: {1}: {2}".format(tri, len_div, ",".join(map(str,div)))
+        if len_div > num_divisors:
+            num_divisors = len_div
+    
+    
+#63748986 higher than 
+
+def return_biggest_divisor(number):
+    fnumber = float(number)
+    i = 1
+    while True:
+        i += 1
+        if not (fnumber / i) % 1 == 0:
+            return i
+    
+
+def first_number_divisible_by(x):
+    largest_divisor = 0
+    i = 0
+    while largest_divisor < x:
+        i += 1
+        tri = triangle(i)
+        biggest_div = return_biggest_divisor(tri)
+        print "{0} {1} {2}".format(i, tri, biggest_div)
+        if biggest_div > largest_divisor:
+            largest_divisor = biggest_div
+
     tri = triangle(i)
     div = divisors(tri)
     len_div = len(div)
     print "{0}: {1}: {2}".format(tri, len_div, ",".join(map(str,div)))
-    if len_div > num_divisors:
-        num_divisors = len_div
+
+#first_number_divisible_by(18)
+#print divisors(5606398996, verbose=True)
     
-    
-#63748986 higher than 
+pretty_until(500)
+
 
