@@ -31,8 +31,10 @@ What is the value of the first triangle number to have over five hundred divisor
 def triangles():
     i = 1
     while True:
-        yield i
-        i += (i + 1)
+        yield sum(xrange(i))
+        i += 1
+        
+        
 
 def factors(num):
     factors = []
@@ -40,11 +42,18 @@ def factors(num):
         if num % i == 0:
             factors.append(i)
             factors.append(num / i)
+            #print i
+            #print (num / i)
+            #print len(factors)
     return factors
     
     
     
-print factors(16777215 * ( 16777215 + 1)/ 2)
+#foo = factors(16777215)
+#print foo
+#print len(foo)
+#exit()
+
     
 
 biggest_numfactors = 0
@@ -52,11 +61,12 @@ for i in triangles():
     numfactors = len(factors(i))
     if numfactors > biggest_numfactors:
         biggest_numfactors = numfactors
-        print "%s:" % i
+        print "Triangle Number is %s:" % i
+        print "Factors is: ",
         for factor in factors(i):
             print factor, 
         print
-        print numfactors
+        print "numfactors is : %s" % numfactors
     if numfactors > 500:
         print i
         for factor in factors(i):
