@@ -10,4 +10,4 @@ newnext=`printf '%03s\n' $next`
 
 echo creating problem_$newnext.py...
 cp problem_template.py problem_$newnext.py
-sed -i "s/NUMBER/$newnext/" problem_$newnext.py
+#sed -i "s/NUMBER/$newnext/" problem_$newnext.py
