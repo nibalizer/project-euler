@@ -1,0 +1,8 @@
+Project Euler
+=============
+
+This is my project euler code. You are not really supposed to look at it until you've completed the problems so you must take the additional step of checking out the problems branch. Have fun on project euler, i'd be happy to exchange friend ids or discuss the problems we're stuck on.
+
+Happy Hacking
+
+~nibalizer
