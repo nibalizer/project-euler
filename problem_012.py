@@ -28,52 +28,44 @@ What is the value of the first triangle number to have over five hundred divisor
 
 """
 
-def triangles():
-    i = 1
-    while True:
-        yield sum(xrange(i))
-        i += 1
-        
-        
 
-def factors(num):
-    factors = []
-    for i in xrange(1,((num+1)/2)):
-        if num % i == 0:
-            factors.append(i)
-            factors.append(num / i)
-            #print i
-            #print (num / i)
-            #print len(factors)
-    return factors
+def triangle(x):
+    return sum(xrange(x+1))
+
+def divisors(x):
+    divs = set()
+    xf = float(x)
+    for i in xrange(1, int(x/2)):
+        #debug
+        #print x, i, x/i
+        if (xf / i) % 1 == 0:
+           divs.add(i)
+           divs.add(x/i)
+    return sorted(divs)
+
+
+
+
+
+#print triangle numbers like in example
+for i in xrange(20):
+    tri = triangle(i)
+    print "{0}: {1}".format(tri, ",".join(map(str,divisors(tri))))
+
+#print divisors(10)
+
+num_divisors = 0
+
+i = 0
+while num_divisors < 500:
+    i += 1
+    tri = triangle(i)
+    div = divisors(tri)
+    len_div = len(div)
+    print "{0}: {1}: {2}".format(tri, len_div, ",".join(map(str,div)))
+    if len_div > num_divisors:
+        num_divisors = len_div
     
     
-    
-#foo = factors(16777215)
-#print foo
-#print len(foo)
-#exit()
-
-    
-
-biggest_numfactors = 0
-for i in triangles():
-    numfactors = len(factors(i))
-    if numfactors > biggest_numfactors:
-        biggest_numfactors = numfactors
-        print "Triangle Number is %s:" % i
-        print "Factors is: ",
-        for factor in factors(i):
-            print factor, 
-        print
-        print "numfactors is : %s" % numfactors
-    if numfactors > 500:
-        print i
-        for factor in factors(i):
-            print factor, 
-        print
-        break
-
-
-
+#63748986 higher than 
 
