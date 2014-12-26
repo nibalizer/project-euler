@@ -58,7 +58,7 @@ for i in xrange(2,int(math.sqrt(number)+1)):
             prime_factors.append(i)
             for prime in prime_factors:
                 print prime,
-            
+
 
 print max(prime_factors)
 
